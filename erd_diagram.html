@@ -1,0 +1,635 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>ERD Diagram - App_OnYar_01</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    #container {
+      display: flex;
+      height: 100vh;
+    }
+    #sidebar {
+      width: 220px;
+      background: #f2f2f2;
+      border-right: 1px solid #ccc;
+      overflow-y: auto;
+      padding: 10px;
+    }
+    #sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    #sidebar li {
+      margin-bottom: 6px;
+    }
+    #sidebar a {
+      text-decoration: none;
+      color: #007bff;
+      cursor: pointer;
+    }
+    #sidebar a:hover {
+      text-decoration: underline;
+    }
+    #diagram {
+      flex: 1;
+      overflow: hidden;
+    }
+    .mermaid {
+      font-size: 20px;
+      padding: 10px;
+    }
+    svg {
+      font-size: 18px;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
+</head>
+<body>
+  <div id="container">
+    <div id="sidebar">
+      <h3>📘 لیست جداول</h3>
+      <ul id="tableList"></ul>
+    </div>
+    <div id="diagram" class="mermaid">
+erDiagram
+    AIRecommendationFeedback {
+        FeedbackID INTEGER
+        RecommendationID INTEGER
+        UserID INTEGER
+        IsUseful BIT
+        Comment NVARCHAR
+        SubmittedAt DATETIME
+    }
+    AIRecommendations {
+        RecommendationID INTEGER
+        UserID INTEGER
+        ContentID INTEGER
+        Score FLOAT
+        Reason NVARCHAR
+        GeneratedAt DATETIME
+        Algorithm NVARCHAR
+        ModelVersion NVARCHAR
+    }
+    AdTargeting {
+        AdID INTEGER
+        DiseaseID INTEGER
+        City NVARCHAR
+        Gender NVARCHAR
+        MinAge INTEGER
+        MaxAge INTEGER
+    }
+    AdViews {
+        ViewID INTEGER
+        AdID INTEGER
+        UserID INTEGER
+        ViewedAt DATETIME
+    }
+    Ads {
+        AdID INTEGER
+        Title NVARCHAR
+        Description NVARCHAR
+        ImageURL NVARCHAR
+        TargetURL NVARCHAR
+        StartDate DATETIME
+        EndDate DATETIME
+        IsActive BIT
+    }
+    Analytics {
+        ID INTEGER
+        EntityType NVARCHAR
+        EntityID INTEGER
+        Metric NVARCHAR
+        Value FLOAT
+        CalculatedAt DATETIME
+    }
+    Appointments {
+        AppointmentID INTEGER
+        PatientID INTEGER
+        DoctorID INTEGER
+        ScheduledAt DATETIME
+        Status NVARCHAR
+        Notes NVARCHAR
+    }
+    AuditLogs {
+        LogID INTEGER
+        UserID INTEGER
+        Action NVARCHAR
+        TargetTable NVARCHAR
+        TargetID INTEGER
+        ChangeSummary NVARCHAR_COLLATE_"SQL_Latin1_General_CP1_CI_AS"
+        PerformedAt DATETIME
+    }
+    Bookmarks {
+        UserID INTEGER
+        ContentID INTEGER
+        BookmarkedAt DATETIME
+    }
+    Comments {
+        CommentID INTEGER
+        UserID INTEGER
+        ContentID INTEGER
+        CommentText NVARCHAR_COLLATE_"SQL_Latin1_General_CP1_CI_AS"
+        CreatedAt DATETIME
+    }
+    Content {
+        ContentID INTEGER
+        Title NVARCHAR
+        Description NVARCHAR_COLLATE_"SQL_Latin1_General_CP1_CI_AS"
+        CoverURL NVARCHAR
+        CreateBy INTEGER
+        CreateAt DATETIME
+        IsPremium BIT
+        Status NVARCHAR
+        LastModifiedBy INTEGER
+        LastModifiedAt DATETIME
+    }
+    ContentModeration {
+        ModerationID INTEGER
+        ContentID INTEGER
+        SubmittedBy INTEGER
+        ReviewedBy INTEGER
+        Status NVARCHAR
+        Reason NVARCHAR
+        SubmittedAt DATETIME
+        ReviewedAt DATETIME
+    }
+    ContentPost {
+        PostID INTEGER
+        ContentID INTEGER
+        Title NVARCHAR
+        Body NVARCHAR_COLLATE_"SQL_Latin1_General_CP1_CI_AS"
+        AuthorID INTEGER
+        CreatedAt DATETIME
+        UpdatedAt DATETIME
+        IsPublished BIT
+    }
+    ContentReports {
+        ReportID INTEGER
+        ReporterID INTEGER
+        TargetType NVARCHAR
+        TargetID INTEGER
+        Reason NVARCHAR
+        CreatedAt DATETIME
+        Status NVARCHAR
+    }
+    ContentTags {
+        ContentID INTEGER
+        TagID INTEGER
+    }
+    ContentTarget {
+        ContentID INTEGER
+        StageID INTEGER
+        MinAge INTEGER
+        MaxAge INTEGER
+        Gender NVARCHAR
+        City NVARCHAR
+    }
+    ContentTranslations {
+        TranslationID INTEGER
+        ContentID INTEGER
+        LanguageCode NVARCHAR
+        Title NVARCHAR
+        Description NVARCHAR_COLLATE_"SQL_Latin1_General_CP1_CI_AS"
+        TranslatedAt DATETIME
+    }
+    ContentTypeMap {
+        ContentID INTEGER
+        TypeID INTEGER
+    }
+    ContentTypes {
+        TypeID INTEGER
+        Name NVARCHAR
+    }
+    ContentVersions {
+        VersionID INTEGER
+        ContentID INTEGER
+        VersionNumber INTEGER
+        Title NVARCHAR
+        Description NVARCHAR_COLLATE_"SQL_Latin1_General_CP1_CI_AS"
+        CreatedAt DATETIME
+        CreatedBy INTEGER
+    }
+    DailyStats {
+        StatDate DATE
+        NewUsers INTEGER
+        ActiveUsers INTEGER
+        ContentViews INTEGER
+        AvgViewDuration FLOAT
+        TotalSubscriptions INTEGER
+    }
+    DiseaseStages {
+        StageID INTEGER
+        DiseaseID INTEGER
+        StageTitle NVARCHAR
+        Description NVARCHAR
+    }
+    Diseases {
+        DiseaseID INTEGER
+        Name NVARCHAR
+        Description NVARCHAR
+    }
+    Doctors {
+        UserID INTEGER
+        Specialty NVARCHAR
+        MedicalCode NVARCHAR
+        ClinicAddress NVARCHAR
+    }
+    ForumCategories {
+        CategoryID INTEGER
+        Name NVARCHAR
+        Description NVARCHAR
+    }
+    ForumLikes {
+        PostID INTEGER
+        UserID INTEGER
+        LikedAt DATETIME
+    }
+    ForumPosts {
+        PostID INTEGER
+        TopicID INTEGER
+        UserID INTEGER
+        Content NVARCHAR_COLLATE_"SQL_Latin1_General_CP1_CI_AS"
+        CreatedAt DATETIME
+        ParentPostID INTEGER
+        IsEdited BIT
+    }
+    ForumTopics {
+        TopicID INTEGER
+        Title NVARCHAR
+        Description NVARCHAR_COLLATE_"SQL_Latin1_General_CP1_CI_AS"
+        CreatedBy INTEGER
+        CreatedAt DATETIME
+        IsClosed BIT
+        CategoryID INTEGER
+    }
+    LoginHistory {
+        EntryID INTEGER
+        UserID INTEGER
+        LoginTime DATETIME
+        LogoutTime DATETIME
+        IPAddress NVARCHAR
+        DeviceInfo NVARCHAR
+    }
+    Messages {
+        MessageID INTEGER
+        SenderID INTEGER
+        ReceiverID INTEGER
+        MessageText NVARCHAR_COLLATE_"SQL_Latin1_General_CP1_CI_AS"
+        SentAt DATETIME
+        IsRead BIT
+    }
+    Notifications {
+        NotificationID INTEGER
+        UserID INTEGER
+        Title NVARCHAR
+        Message NVARCHAR_COLLATE_"SQL_Latin1_General_CP1_CI_AS"
+        Type NVARCHAR
+        IsRead BIT
+        CreatedAt DATETIME
+    }
+    OrderItems {
+        OrderItemID INTEGER
+        OrderID INTEGER
+        ProductID INTEGER
+        Quantity INTEGER
+        Price INTEGER
+    }
+    Orders {
+        OrderID INTEGER
+        UserID INTEGER
+        TotalAmount INTEGER
+        OrderDate DATETIME
+        Status NVARCHAR
+    }
+    PaymentTransactions {
+        PaymentID INTEGER
+        UserID INTEGER
+        Amount INTEGER
+        PaidAt DATETIME
+        Status NVARCHAR
+        Gateway NVARCHAR
+        RefCode NVARCHAR
+    }
+    Permissions {
+        PermissionID INTEGER
+        Name NVARCHAR
+        Description NVARCHAR
+    }
+    Products {
+        ProductID INTEGER
+        Name NVARCHAR
+        Description NVARCHAR
+        Price INTEGER
+        Stock INTEGER
+        ImageURL NVARCHAR
+        IsActive BIT
+    }
+    Ratings {
+        RatingID INTEGER
+        UserID INTEGER
+        ContentID INTEGER
+        Score INTEGER
+        Comment NVARCHAR
+        RatedAt DATETIME
+    }
+    RolePermissions {
+        RoleID INTEGER
+        PermissionID INTEGER
+    }
+    Roles {
+        RoleID INTEGER
+        Name NVARCHAR
+    }
+    Stages {
+        StageID INTEGER
+        Name NVARCHAR
+        Description NVARCHAR
+    }
+    Subscriptions {
+        SubscriptionID INTEGER
+        Name NVARCHAR
+        Description NVARCHAR
+        Price INTEGER
+        DurationDays INTEGER
+        IsActive BIT
+    }
+    SupportMessages {
+        MessageID INTEGER
+        UserID INTEGER
+        Message NVARCHAR_COLLATE_"SQL_Latin1_General_CP1_CI_AS"
+        IsFromUser BIT
+        RepliedTo INTEGER
+        CreatedAt DATETIME
+    }
+    SurveyAnswers {
+        AnswerID INTEGER
+        UserID INTEGER
+        QuestionID INTEGER
+        AnswerText NVARCHAR_COLLATE_"SQL_Latin1_General_CP1_CI_AS"
+        AnsweredAt DATETIME
+    }
+    SurveyQuestions {
+        QuestionID INTEGER
+        SurveyID INTEGER
+        QuestionText NVARCHAR
+        QuestionType NVARCHAR
+    }
+    Surveys {
+        SurveyID INTEGER
+        Title NVARCHAR
+        Description NVARCHAR
+        CreatedBy INTEGER
+        CreatedAt DATETIME
+    }
+    Tags {
+        TagID INTEGER
+        Name NVARCHAR
+    }
+    UserAddresses {
+        AddressID INTEGER
+        UserID INTEGER
+        FullName NVARCHAR
+        Phone NVARCHAR
+        AddressText NVARCHAR
+        City NVARCHAR
+        Province NVARCHAR
+        PostalCode NVARCHAR
+        IsDefault BIT
+    }
+    UserBehaviorLog {
+        LogID INTEGER
+        UserID INTEGER
+        ActionType NVARCHAR
+        TargetID INTEGER
+        TargetType NVARCHAR
+        Timestamp DATETIME
+        SessionID UNIQUEIDENTIFIER
+    }
+    UserContentDuration {
+        UserID INTEGER
+        ContentID INTEGER
+        ViewedAt DATETIME
+        DurationSeconds INTEGER
+    }
+    UserContentLog {
+        UserID INTEGER
+        ContentID INTEGER
+        ViewedAt DATETIME
+    }
+    UserDiseaseStage {
+        ID INTEGER
+        UserID INTEGER
+        DiseaseID INTEGER
+        StageID INTEGER
+        SetAt DATETIME
+    }
+    UserFeatures {
+        UserID INTEGER
+        TotalViews INTEGER
+        AvgViewDuration FLOAT
+        TotalLikes INTEGER
+        TotalComments INTEGER
+        LastInteraction DATETIME
+    }
+    UserLoginCodes {
+        ID INTEGER
+        PhoneNumber NVARCHAR
+        Code NVARCHAR
+        IsUsed BIT
+        CreatedAt DATETIME
+    }
+    UserPreferences {
+        UserID INTEGER
+        NotificationsEnabled BIT
+        Language NVARCHAR
+        DarkModeEnabled BIT
+    }
+    UserRoles {
+        UserID INTEGER
+        RoleID INTEGER
+    }
+    UserSubscriptions {
+        UserID INTEGER
+        SubscriptionID INTEGER
+        StartDate DATETIME
+        EndDate DATETIME
+        IsCanceled BIT
+    }
+    Users {
+        UserID INTEGER
+        FullName NVARCHAR
+        Gender NVARCHAR
+        BirthDate DATE
+        City NVARCHAR
+        State NVARCHAR
+        CreateAt DATETIME
+        StageID INTEGER
+        PhoneNumber NVARCHAR
+        UserType NVARCHAR
+        RelatedPatientID INTEGER
+    }
+    AdViews }|--|| Users : FK
+    Appointments }|--|| Users : FK
+    Appointments }|--|| Users : FK
+    AuditLogs }|--|| Users : FK
+    Bookmarks }|--|| Users : FK
+    Comments }|--|| Users : FK
+    Content }|--|| Users : FK
+    Content }|--|| Users : FK
+    ContentModeration }|--|| Users : FK
+    ContentModeration }|--|| Users : FK
+    ContentPost }|--|| Users : FK
+    ContentReports }|--|| Users : FK
+    ContentVersions }|--|| Users : FK
+    ForumLikes }|--|| Users : FK
+    ForumPosts }|--|| Users : FK
+    ForumTopics }|--|| Users : FK
+    LoginHistory }|--|| Users : FK
+    Messages }|--|| Users : FK
+    Messages }|--|| Users : FK
+    Notifications }|--|| Users : FK
+    Orders }|--|| Users : FK
+    PaymentTransactions }|--|| Users : FK
+    Ratings }|--|| Users : FK
+    SupportMessages }|--|| Users : FK
+    SurveyAnswers }|--|| Users : FK
+    Surveys }|--|| Users : FK
+    UserAddresses }|--|| Users : FK
+    UserContentDuration }|--|| Users : FK
+    UserContentLog }|--|| Users : FK
+    UserDiseaseStage }|--|| Users : FK
+    UserRoles }|--|| Users : FK
+    UserSubscriptions }|--|| Users : FK
+    Users }|--|| Users : FK
+    </div>
+  </div>
+
+  <script>
+    mermaid.initialize({ startOnLoad: true });
+
+    const tableListHTML = [
+          "<li><a href=\"#AIRecommendationFeedback\">AIRecommendationFeedback</a></li>",
+          "<li><a href=\"#AIRecommendations\">AIRecommendations</a></li>",
+          "<li><a href=\"#AdTargeting\">AdTargeting</a></li>",
+          "<li><a href=\"#AdViews\">AdViews</a></li>",
+          "<li><a href=\"#Ads\">Ads</a></li>",
+          "<li><a href=\"#Analytics\">Analytics</a></li>",
+          "<li><a href=\"#Appointments\">Appointments</a></li>",
+          "<li><a href=\"#AuditLogs\">AuditLogs</a></li>",
+          "<li><a href=\"#Bookmarks\">Bookmarks</a></li>",
+          "<li><a href=\"#Comments\">Comments</a></li>",
+          "<li><a href=\"#Content\">Content</a></li>",
+          "<li><a href=\"#ContentModeration\">ContentModeration</a></li>",
+          "<li><a href=\"#ContentPost\">ContentPost</a></li>",
+          "<li><a href=\"#ContentReports\">ContentReports</a></li>",
+          "<li><a href=\"#ContentTags\">ContentTags</a></li>",
+          "<li><a href=\"#ContentTarget\">ContentTarget</a></li>",
+          "<li><a href=\"#ContentTranslations\">ContentTranslations</a></li>",
+          "<li><a href=\"#ContentTypeMap\">ContentTypeMap</a></li>",
+          "<li><a href=\"#ContentTypes\">ContentTypes</a></li>",
+          "<li><a href=\"#ContentVersions\">ContentVersions</a></li>",
+          "<li><a href=\"#DailyStats\">DailyStats</a></li>",
+          "<li><a href=\"#DiseaseStages\">DiseaseStages</a></li>",
+          "<li><a href=\"#Diseases\">Diseases</a></li>",
+          "<li><a href=\"#Doctors\">Doctors</a></li>",
+          "<li><a href=\"#ForumCategories\">ForumCategories</a></li>",
+          "<li><a href=\"#ForumLikes\">ForumLikes</a></li>",
+          "<li><a href=\"#ForumPosts\">ForumPosts</a></li>",
+          "<li><a href=\"#ForumTopics\">ForumTopics</a></li>",
+          "<li><a href=\"#LoginHistory\">LoginHistory</a></li>",
+          "<li><a href=\"#Messages\">Messages</a></li>",
+          "<li><a href=\"#Notifications\">Notifications</a></li>",
+          "<li><a href=\"#OrderItems\">OrderItems</a></li>",
+          "<li><a href=\"#Orders\">Orders</a></li>",
+          "<li><a href=\"#PaymentTransactions\">PaymentTransactions</a></li>",
+          "<li><a href=\"#Permissions\">Permissions</a></li>",
+          "<li><a href=\"#Products\">Products</a></li>",
+          "<li><a href=\"#Ratings\">Ratings</a></li>",
+          "<li><a href=\"#RolePermissions\">RolePermissions</a></li>",
+          "<li><a href=\"#Roles\">Roles</a></li>",
+          "<li><a href=\"#Stages\">Stages</a></li>",
+          "<li><a href=\"#Subscriptions\">Subscriptions</a></li>",
+          "<li><a href=\"#SupportMessages\">SupportMessages</a></li>",
+          "<li><a href=\"#SurveyAnswers\">SurveyAnswers</a></li>",
+          "<li><a href=\"#SurveyQuestions\">SurveyQuestions</a></li>",
+          "<li><a href=\"#Surveys\">Surveys</a></li>",
+          "<li><a href=\"#Tags\">Tags</a></li>",
+          "<li><a href=\"#UserAddresses\">UserAddresses</a></li>",
+          "<li><a href=\"#UserBehaviorLog\">UserBehaviorLog</a></li>",
+          "<li><a href=\"#UserContentDuration\">UserContentDuration</a></li>",
+          "<li><a href=\"#UserContentLog\">UserContentLog</a></li>",
+          "<li><a href=\"#UserDiseaseStage\">UserDiseaseStage</a></li>",
+          "<li><a href=\"#UserFeatures\">UserFeatures</a></li>",
+          "<li><a href=\"#UserLoginCodes\">UserLoginCodes</a></li>",
+          "<li><a href=\"#UserPreferences\">UserPreferences</a></li>",
+          "<li><a href=\"#UserRoles\">UserRoles</a></li>",
+          "<li><a href=\"#UserSubscriptions\">UserSubscriptions</a></li>",
+          "<li><a href=\"#Users\">Users</a></li>",
+    ].join("\n");
+    document.getElementById("tableList").innerHTML = tableListHTML;
+
+    document.addEventListener("DOMContentLoaded", () => {
+      setTimeout(() => {
+        const svg = document.querySelector("#diagram svg");
+        if (svg) {
+          svg.setAttribute("width", "5000");
+          svg.setAttribute("height", "3000");
+          svg.setAttribute("viewBox", "0 0 5000 3000");
+          svg.setAttribute("preserveAspectRatio", "xMinYMin meet");
+
+          const panZoom = svgPanZoom(svg, {
+            zoomEnabled: true,
+            controlIconsEnabled: true,
+            fit: true,
+            center: true,
+            minZoom: 0.1,
+            maxZoom: 10,
+            zoomScaleSensitivity: 0.3
+          });
+
+          // 🧠 ساخت map از نام جدول‌ها به گروه <g> متناظر
+          const tableGroups = {};
+          svg.querySelectorAll("g").forEach(g => {
+            const label = g.querySelector("text");
+            if (label) {
+              const name = label.textContent.trim();
+              if (!tableGroups[name] && /^[A-Za-z_][A-Za-z0-9_]*$/.test(name)) {
+                tableGroups[name] = g;
+              }
+            }
+          });
+
+          // پیمایش دقیق به جدول با استفاده از getBBox گروه <g>
+          document.querySelectorAll("#tableList a").forEach(a => {
+            a.addEventListener("click", e => {
+              e.preventDefault();
+              const name = a.textContent;
+              const group = tableGroups[name];
+              if (group) {
+                const box = group.getBBox();
+                const centerX = box.x + box.width / 2;
+                const centerY = box.y + box.height / 2;
+                const zoomLevel = 2.5;
+
+                panZoom.zoom(zoomLevel);
+                panZoom.pan({
+                  x: -centerX * zoomLevel + window.innerWidth / 2,
+                  y: -centerY * zoomLevel + window.innerHeight / 2
+                });
+              }
+            });
+          });
+        }
+      }, 800);
+    });
+  </script>
+</body>
+</html>
